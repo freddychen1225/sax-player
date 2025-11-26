@@ -149,9 +149,18 @@
             border-radius: 30px;
             font-weight: bold;
             font-size: 1.1rem;
+            cursor: pointer;
         }
 
         #file-input { display: none; }
+
+        /* 底部簽名檔 */
+        .footer {
+            margin-top: 20px;
+            font-size: 0.8rem;
+            color: #666;
+            letter-spacing: 1px;
+        }
 
     </style>
 </head>
@@ -178,13 +187,20 @@
         <div style="padding:20px; color:#666; text-align:center;">等待匯入音樂...</div>
     </div>
 
+    <!-- 按鈕文字改為「匯入音樂」 -->
     <button class="import-btn" onclick="document.getElementById('file-input').click()">
-        📂 匯入 iCloud 音樂
+        📂 匯入音樂
     </button>
-    <!-- 這裡做了修改，明確加入 mp3, m4r, m4a, wav, aac -->
-    <input type="file" id="file-input" multiple accept="audio/*, .mp3, .m4r, .m4a, .wav, .aac">
+    
+    <!-- 擴充格式支援：加入 ogg, flac, webm, 3gp 等 -->
+    <input type="file" id="file-input" multiple accept="audio/*, .mp3, .m4r, .m4a, .wav, .aac, .ogg, .flac, .webm, .3gp">
 
     <audio id="audio"></audio>
+
+    <!-- 協作簽名 -->
+    <div class="footer">
+        Freddy & Gemini 3 Pro 設計協作
+    </div>
 
     <script>
         const audio = document.getElementById('audio');
@@ -230,7 +246,6 @@
             if (files.length === 0) return;
             
             files.forEach(file => {
-                // 這裡不檢查 type 了，直接相信使用者選的檔案
                 playlist.push({
                     name: file.name.replace(/\.[^/.]+$/, ""),
                     src: URL.createObjectURL(file)
